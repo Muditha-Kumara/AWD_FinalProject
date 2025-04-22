@@ -6,11 +6,14 @@ Welcome to the **SmartLoan Calculator Project**! This is a responsive web applic
 - **User Authentication**: Secure login and registration for users.
 - **Calculation History**: Track and review past loan calculations.
 
+<br><br>
 ## Phase 1 Documentation
 
 The following documents provide detailed insights into the initial phase of the project:
 - 📄 [Phase 1 Submission](Phase_1/Project_phase_1.md): Comprehensive documentation of the project's first phase.
 - 📘 [Project Logbook](Phase_1/Logbook.md): A detailed log of the project's progress and milestones.
+- 🖼️ [UI Design](Phase_1/UI.jpeg): Visual representation of the user interface design for Phase 1.
+ 
 
 ## Project Structure
 
@@ -20,13 +23,15 @@ The project directory is organized as follows:
 AWD_FinalProject/
 ├── Phase_1/
 │   ├── Project_phase_1.md  # Phase 1 submission document
-│   └── Logbook.md          # Project logbook
+│   ├── Logbook.md          # Project logbook
+│   └── UI.jpeg             # UI design for Phase 1
 ├── src/                    # Future implementation files
 └── README.md               # Project overview and documentation
 ```
 
 Stay tuned for updates as the project evolves!
 
+<br><br>
 ## Phase 2 Documentation
 
 The following documents provide detailed insights into the second phase of the project:
@@ -60,7 +65,8 @@ AWD_FinalProject/
 │   └── package.json        # Frontend dependencies
 ├── Phase_1/                # Phase 1 documentation
 │   ├── Project_phase_1.md  # Phase 1 submission document
-│   └── Logbook.md          # Project logbook
+│   ├── Logbook.md          # Project logbook
+│   └── UI.jpeg             # UI design for Phase 1
 ├── Phase_2/                # Phase 2 documentation
 │   ├── Project_phase_2.md  # Phase 2 submission document
 │   └── Testing_Report.md   # Testing report for Phase 2
