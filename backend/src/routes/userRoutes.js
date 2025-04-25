@@ -1,10 +1,11 @@
 const express = require('express');
 const { registerUser, loginUser } = require('../controllers/userController');
-const { validateUser } = require('../middleware/validate');
+const { validateLoginUser } = require('../middleware/validateLoginUser');
+const {validateRegisterUser} = require('../middleware/validateRegisterUser');
 const router = express.Router();
 
 // Add validation middleware before controllers
-router.post('/register', validateUser, registerUser);
-router.post('/login', validateUser, loginUser);
+router.post('/register', validateRegisterUser, registerUser);
+router.post('/login', validateLoginUser, loginUser);
 
 module.exports = router;
