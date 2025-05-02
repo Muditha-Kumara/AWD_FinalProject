@@ -19,16 +19,31 @@ exports.registerUser = async (req, res) => {
 exports.loginUser = async (req, res) => {
     const { email, password } = req.body;
     try {
+        console.debug('Login attempt for email:', email);
+
         const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
-        if (result.rows.length === 0) return res.status(404).json({ error: 'User not found' });
+        console.debug('Database query result:', result.rows);
+
+        if (result.rows.length === 0) {
+            console.warn('User not found for email:', email);
+            return res.status(404).json({ error: 'User not found' });
+        }
 
         const user = result.rows[0];
         const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) return res.status(401).json({ error: 'Invalid credentials' });
+        console.debug('Password match status:', isMatch);
 
-        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        if (!isMatch) {
+            console.warn('Invalid credentials for email:', email);
+            return res.status(401).json({ error: 'Invalid credentials' });
+        }
+
+        const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        console.debug('Generated JWT token for user ID:', user.id);
+
         res.json({ token });
     } catch (err) {
+        console.error('Error during login process:', err.message);
         res.status(500).json({ error: err.message });
     }
 };

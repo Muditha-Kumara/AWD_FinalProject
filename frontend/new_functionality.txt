@@ -1,0 +1,18 @@
+1st loading page should loan calculation page.
+    readio button need to select each loan types
+    each loan type interest rates should get from backend api
+    each calculation should be represent line chart
+    should include save button
+        when click save button  
+            if not log before, should appear loging popup screan
+            else should save to backend according to user
+    should include "add to compare" button
+        then should save details to backend to compare it later with compare page
+every page should be follow common theam with top bootstrap
+    that bar should include sign, login and navigation.
+        if loged, it should display user email
+
+every thing i need to profesional and well practice way.
+you can create backend api structure according to requirment.
+if anythink unclear, you can ask before creating code.
+    
