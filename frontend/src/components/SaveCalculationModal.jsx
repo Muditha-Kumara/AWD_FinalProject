@@ -31,7 +31,22 @@ function SaveCalculationModal({ show, onClose, onSaveSuccess, calculation }) {
       onSaveSuccess();
     } catch (err) {
       setLoading(false);
-      setError('Failed to save calculation.');
+      if (err.response) {
+        if (err.response.status === 401) {
+          setError('Authentication required. Please log in.');
+        } else if (err.response.status === 403) {
+          setError('Session expired or invalid. Please log in again.');
+          setTimeout(() => {
+            localStorage.removeItem('token');
+            localStorage.removeItem('email');
+            onClose(); 
+          }, 1500);
+        } else {
+          setError('Failed to save calculation.');
+        }
+      } else {
+        setError('Failed to save calculation.');
+      }
     }
   };
 
