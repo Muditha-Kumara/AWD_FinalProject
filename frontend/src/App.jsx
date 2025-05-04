@@ -39,7 +39,7 @@ function App() {
 
   return (
     <Router>
-      <div className="app-container" style={{ minHeight: '100vh', width: '100%', maxWidth: '100vw', backgroundImage: 'url(/public/background.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+      <div className="app-container d-flex flex-column" style={{ minHeight: '100vh', width: '100%', maxWidth: '100vw', backgroundImage: 'url(/public/background.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
         <Navbar
           isLoggedIn={isLoggedIn}
           userEmail={userEmail}
@@ -47,16 +47,18 @@ function App() {
           onShowLoginModal={() => setShowLoginModal(true)}
         />
 
-        <div className="container mt-4">
-          <Routes>
-            <Route path="/" element={
-              <ErrorBoundary>
-                <LoanCalculator onRequireLogin={() => setShowLoginModal(true)} />
-              </ErrorBoundary>
-            } />
-            <Route path="/compare" element={<ComparePage />} />
-            <Route path="/chart" element={<ChartPage />} />
-          </Routes>
+        <div className="flex-grow-1 d-flex flex-column" style={{ overflowY: 'auto' }}>
+          <div className="container mt-4 flex-grow-1">
+            <Routes>
+              <Route path="/" element={
+                <ErrorBoundary>
+                  <LoanCalculator onRequireLogin={() => setShowLoginModal(true)} />
+                </ErrorBoundary>
+              } />
+              <Route path="/compare" element={<ComparePage />} />
+              <Route path="/chart" element={<ChartPage />} />
+            </Routes>
+          </div>
         </div>
 
         <LoginModal show={showLoginModal} onClose={() => setShowLoginModal(false)} onLogin={handleLogin} />
