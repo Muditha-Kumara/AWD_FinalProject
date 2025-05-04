@@ -37,9 +37,18 @@ function LoanCalculator() {
   useEffect(() => {
     // Fetch loan types and interest rates from backend API
     fetch('http://localhost:5000/api/loans')
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch loan types');
+        }
+        return response.json();
+      })
       .then((data) => setLoanTypes(data))
-      .catch((error) => console.error('Error fetching loan types:', error));
+      .catch((error) => {
+        console.error('Error fetching loan types:', error);
+        alert('Error fetching loan types: ' + error.message); // Show popup
+        setLoanTypes([{ id: 'error', name: 'Error fetching loan types', interestRate: 0 }]); // Display error on webpage
+      });
   }, []);
 
   useEffect(() => {
