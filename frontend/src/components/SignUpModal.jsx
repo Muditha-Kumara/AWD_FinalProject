@@ -14,7 +14,7 @@ function SignUpModal({ onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/users/register', formData);
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/users/register`, formData);
       if (response.status === 201) {
         setSuccess(true);
         setError('');

@@ -6,7 +6,7 @@ function ComparePage() {
 
   useEffect(() => {
     // Fetch comparison data from backend
-    fetch('/api/compare')
+    fetch(`${import.meta.env.VITE_API_URL}/compare`)
       .then((response) => response.json())
       .then((data) => setComparisons(data))
       .catch((error) => console.error('Error fetching comparison data:', error));

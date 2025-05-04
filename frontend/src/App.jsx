@@ -4,6 +4,7 @@ import LoanCalculator from './LoanCalculator';
 import LoginModal from './components/LoginModal';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ComparePage from './pages/ComparePage';
+import ChartPage from './pages/ChartPage';
 import './App.css'; // Add custom styles
 import Navbar from './components/Navbar';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -57,6 +58,7 @@ function App() {
               </ErrorBoundary>
             } />
             <Route path="/compare" element={<ComparePage />} />
+            <Route path="/chart" element={<ChartPage />} />
           </Routes>
         </div>
 

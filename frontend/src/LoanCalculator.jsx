@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Line } from 'react-chartjs-2';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate } from 'react-router-dom';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -28,15 +29,18 @@ function LoanCalculator() {
   const chartInstanceRef = useRef(null); // Reference to the chart instance
   const [loanTypes, setLoanTypes] = useState([]);
   const [selectedLoanType, setSelectedLoanType] = useState('');
+  const [selectedLoanTypeName, setSelectedLoanTypeName] = useState('');
   const [loanAmount, setLoanAmount] = useState('');
   const [term, setTerm] = useState('');
   const [interestRate, setInterestRate] = useState('');
   const [monthlyPayment, setMonthlyPayment] = useState(null);
   const [chartData, setChartData] = useState(null);
+  const [termType, setTermType] = useState('years');
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch loan types and interest rates from backend API
-    fetch('http://localhost:5000/api/loans')
+    fetch(`${import.meta.env.VITE_API_URL}/loans`)
       .then((response) => {
         if (!response.ok) {
           throw new Error('Failed to fetch loan types');
@@ -97,47 +101,22 @@ function LoanCalculator() {
 
       setChartData(newChartData);
 
-      // Destroy the previous chart instance if it exists
-      if (chartInstanceRef.current) {
-        chartInstanceRef.current.destroy();
-        chartInstanceRef.current = null;
-      }
+      // Navigate to the chart page with data
+      navigate('/chart', {
+        state: {
+          chartData: newChartData,
+          monthlyPayment: payment.toFixed(2),
+          loanType: selectedLoanType,
+          loanTypeName: selectedLoanTypeName,
+          loanAmount: principal,
+          interestRate: interestRate,
+          term: term,
+          termType: termType
+        }
+      });
     } else {
       alert('Please fill in all fields with valid numbers.');
     }
-  };
-
-  const handleSave = () => {
-    // Check if user is logged in and save data
-    const isLoggedIn = false; // Replace with actual login check
-    if (!isLoggedIn) {
-      alert('Please log in to save your calculation.');
-      // Trigger login popup here
-    } else {
-      fetch('/api/save-calculation', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ loanAmount, term, interestRate, monthlyPayment }),
-      })
-        .then((response) => {
-          if (response.ok) alert('Calculation saved successfully!');
-          else alert('Failed to save calculation.');
-        })
-        .catch((error) => console.error('Error saving calculation:', error));
-    }
-  };
-
-  const handleAddToCompare = () => {
-    fetch('/api/add-to-compare', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ loanAmount, term, interestRate, monthlyPayment }),
-    })
-      .then((response) => {
-        if (response.ok) alert('Added to compare successfully!');
-        else alert('Failed to add to compare.');
-      })
-      .catch((error) => console.error('Error adding to compare:', error));
   };
 
   return (
@@ -155,6 +134,7 @@ function LoanCalculator() {
                 value={type.id}
                 onChange={() => {
                   setSelectedLoanType(type.id);
+                  setSelectedLoanTypeName(type.name);
                   setInterestRate(type.interestRate);
                 }}
               />
@@ -183,7 +163,10 @@ function LoanCalculator() {
               name="termType"
               value="years"
               defaultChecked
-              onChange={() => setTerm('')}
+              onChange={() => {
+                setTermType('years');
+                setTerm('');
+              }}
             />
             <label className="form-check-label">Years</label>
           </div>
@@ -193,7 +176,10 @@ function LoanCalculator() {
               type="radio"
               name="termType"
               value="months"
-              onChange={() => setTerm('')}
+              onChange={() => {
+                setTermType('months');
+                setTerm('');
+              }}
             />
             <label className="form-check-label">Months</label>
           </div>
@@ -208,8 +194,6 @@ function LoanCalculator() {
         />
       </div>
       <button className="btn btn-primary me-2" onClick={calculateLoan}>Calculate</button>
-      <button className="btn btn-success me-2" onClick={handleSave}>Save</button>
-      <button className="btn btn-warning" onClick={handleAddToCompare}>Add to Compare</button>
 
       {monthlyPayment && (
         <div className="mt-4">
