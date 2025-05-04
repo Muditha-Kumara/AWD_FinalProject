@@ -14,3 +14,16 @@ CREATE TABLE loans (
     term INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE IF NOT EXISTS calculations (
+    id SERIAL PRIMARY KEY,
+    title TEXT NOT NULL,
+    description TEXT,
+    loanTypeName TEXT NOT NULL,
+    loanAmount REAL NOT NULL,
+    interestRate REAL NOT NULL,
+    term INTEGER NOT NULL,
+    termType TEXT NOT NULL,
+    monthlyPayment REAL NOT NULL,
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

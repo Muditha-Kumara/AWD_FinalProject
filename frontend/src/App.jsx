@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import LoanCalculator from './LoanCalculator';
 import LoginModal from './components/LoginModal';
@@ -14,28 +14,26 @@ function App() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [userEmail, setUserEmail] = useState('');
 
-  const handleLogin = (token) => {
-    try {
-      // Decode the JWT token to extract the email
-      const decodedToken = JSON.parse(atob(token.split('.')[1])); // Assuming JWT token
-      const email = decodedToken.email;
-
-      if (email) {
-        localStorage.setItem('authToken', token);
-        setIsLoggedIn(true);
-        setUserEmail(email);
-      } else {
-        console.error('Email not found in token');
-      }
-    } catch (error) {
-      console.error('Error decoding token:', error);
+  // On mount, check localStorage for token and email
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const email = localStorage.getItem('email');
+    if (token && email) {
+      setIsLoggedIn(true);
+      setUserEmail(email);
     }
+  }, []);
 
+  // Accept both token and email from LoginModal
+  const handleLogin = (token, email) => {
+    setIsLoggedIn(true);
+    setUserEmail(email);
     setShowLoginModal(false);
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('authToken');
+    localStorage.removeItem('token');
+    localStorage.removeItem('email');
     setIsLoggedIn(false);
     setUserEmail('');
   };

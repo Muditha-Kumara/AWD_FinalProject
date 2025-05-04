@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Line } from "react-chartjs-2";
 import "bootstrap/dist/css/bootstrap.min.css";
+import LoginModal from "../components/LoginModal";
+import SaveCalculationModal from "../components/SaveCalculationModal";
 
 function ChartPage() {
   const location = useLocation();
   const { chartData, monthlyPayment, loanType, loanTypeName, loanAmount, interestRate, term, termType } = location.state || {};
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showSaveModal, setShowSaveModal] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
 
   if (!chartData || !monthlyPayment) {
     return (
@@ -14,6 +19,21 @@ function ChartPage() {
       </div>
     );
   }
+
+  const handleSaveClick = () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setShowLoginModal(true);
+    } else {
+      setShowSaveModal(true);
+    }
+  };
+
+  const handleSaveSuccess = () => {
+    setShowSaveModal(false);
+    setSaveSuccess(true);
+    setTimeout(() => setSaveSuccess(false), 2000);
+  };
 
   return (
     <div className="container mt-4">
@@ -68,8 +88,29 @@ function ChartPage() {
         />
       </div>
       <div className="mt-4 d-flex justify-content-end">
-        <button className="btn btn-primary">Save</button>
+        <button className="btn btn-primary" onClick={handleSaveClick}>Save</button>
       </div>
+      {saveSuccess && (
+        <div className="alert alert-success mt-3">Calculation saved successfully!</div>
+      )}
+      <LoginModal show={showLoginModal} onClose={() => setShowLoginModal(false)} onLogin={() => { setShowLoginModal(false); setShowSaveModal(true); }} />
+      {showSaveModal && (
+        <SaveCalculationModal
+          show={showSaveModal}
+          onClose={() => setShowSaveModal(false)}
+          onSaveSuccess={handleSaveSuccess}
+          calculation={{
+            chartData,
+            monthlyPayment,
+            loanType,
+            loanTypeName,
+            loanAmount,
+            interestRate,
+            term,
+            termType
+          }}
+        />
+      )}
     </div>
   );
 }

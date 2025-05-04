@@ -19,7 +19,10 @@ function LoginModal({ show, onClose, onLogin }) {
 
       if (response.ok) {
         const data = await response.json();
-        onLogin(data.token); // Pass the token to the parent component
+        // Save token and email to localStorage
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('email', email);
+        onLogin(data.token, email); // Pass both token and email to parent
         setError('');
       } else if (response.status === 404) {
         setError('User not found');
