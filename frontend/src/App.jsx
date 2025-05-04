@@ -14,7 +14,6 @@ function App() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [userEmail, setUserEmail] = useState('');
 
-  // On mount, check localStorage for token and email
   useEffect(() => {
     const token = localStorage.getItem('token');
     const email = localStorage.getItem('email');

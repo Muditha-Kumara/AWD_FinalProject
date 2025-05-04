@@ -1,6 +1,7 @@
-// filepath: /home/muditha/AdvanceWeb/AWD_FinalProject/backend/src/routes/loanRoutes.js
 const express = require('express');
 const router = express.Router();
+const auth = require('../middleware/auth');
+const calculationController = require('../controllers/calculationController');
 
 // Updated route to return loan type and interest value
 router.get('/', (req, res) => {
@@ -12,5 +13,8 @@ router.get('/', (req, res) => {
   ];
     res.json(loanDetails);
 });
+
+// Get all calculations for the authenticated user
+router.get('/calculations/all', auth, calculationController.getAllCalculations);
 
 module.exports = router;

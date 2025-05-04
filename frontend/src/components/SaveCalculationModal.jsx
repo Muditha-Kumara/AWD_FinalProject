@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function SaveCalculationModal({ show, onClose, onSaveSuccess, calculation }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   if (!show) return null;
 
@@ -19,16 +21,19 @@ function SaveCalculationModal({ show, onClose, onSaveSuccess, calculation }) {
     setError('');
     try {
       const token = localStorage.getItem('token');
+      const email = localStorage.getItem('email');
       const payload = {
         title,
         description,
-        ...calculation
+        ...calculation,
+        email
       };
       await axios.post(`${import.meta.env.VITE_API_URL}/calculations/save`, payload, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setLoading(false);
       onSaveSuccess();
+      navigate('/compare');
     } catch (err) {
       setLoading(false);
       if (err.response) {

@@ -25,5 +25,6 @@ CREATE TABLE IF NOT EXISTS calculations (
     term INTEGER NOT NULL,
     termType TEXT NOT NULL,
     monthlyPayment REAL NOT NULL,
+    email VARCHAR(100) NOT NULL, -- Added email column
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
