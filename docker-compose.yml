@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  app:
+  backend:
     build: ./backend
     ports:
       - "3000:3000"
@@ -10,6 +10,13 @@ services:
       - JWT_SECRET=your_super_secret_key
     depends_on:
       - db
+
+  frontend:
+    image: mudithadocker/awd:latest
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
 
   db:
     image: postgres:15

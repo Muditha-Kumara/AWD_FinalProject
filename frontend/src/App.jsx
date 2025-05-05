@@ -39,7 +39,7 @@ function App() {
 
   return (
     <Router>
-      <div className="app-container d-flex flex-column" style={{ minHeight: '100vh', width: '100%', maxWidth: '100vw', backgroundImage: 'url(/public/background.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+      <div className="app-container d-flex flex-column" style={{ minHeight: '100vh', width: '100%', maxWidth: '100vw', backgroundImage: 'url(/background.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
         <Navbar
           isLoggedIn={isLoggedIn}
           userEmail={userEmail}
