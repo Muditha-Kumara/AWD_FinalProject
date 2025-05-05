@@ -26,5 +26,5 @@ jobs:
           ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
             cd ~/app
             docker-compose down || true
-            docker-compose up -d db
+            docker-compose up -d --build
           EOF
