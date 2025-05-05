@@ -37,6 +37,8 @@ Stay tuned for updates as the project evolves!
 The following documents provide detailed insights into the second phase of the project:
 - 📄 [Phase 2 Submission](Phase_2/Project_phase_2.md): Comprehensive documentation of the project's second phase.
 - 📘 [Testing Report](Phase_2/Testing_Report.md): Detailed report on the testing process and results.
+- 📘 [Project Logbook](Phase_1/Logbook.md): A detailed log of the project's progress and milestones.
+- 🌐 [Live Application](http://54.242.0.197){:target="_blank"}: Access the deployed SmartLoan Calculator application.
 
 ## Updated Project Structure
 
