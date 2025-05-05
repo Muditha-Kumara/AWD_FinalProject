@@ -1,23 +1,50 @@
-const db = require('../models/db');
+const db = require("../models/db");
 
 exports.saveCalculation = async (req, res) => {
-  const { title, description, loanTypeName, loanAmount, interestRate, term, termType, monthlyPayment } = req.body;
+  const {
+    title,
+    description,
+    loanTypeName,
+    loanAmount,
+    interestRate,
+    term,
+    termType,
+    monthlyPayment,
+  } = req.body;
   const email = req.user.email; // Get email from authenticated user
 
-  if (!title || !loanTypeName || !loanAmount || !interestRate || !term || !termType || !monthlyPayment) {
-    return res.status(400).json({ error: 'Missing required fields' });
+  if (
+    !title ||
+    !loanTypeName ||
+    !loanAmount ||
+    !interestRate ||
+    !term ||
+    !termType ||
+    !monthlyPayment
+  ) {
+    return res.status(400).json({ error: "Missing required fields" });
   }
 
   try {
     const query = `INSERT INTO calculations (title, description, loanTypeName, loanAmount, interestRate, term, termType, monthlyPayment, email) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`;
-    const values = [title, description, loanTypeName, loanAmount, interestRate, term, termType, monthlyPayment, email];
+    const values = [
+      title,
+      description,
+      loanTypeName,
+      loanAmount,
+      interestRate,
+      term,
+      termType,
+      monthlyPayment,
+      email,
+    ];
 
     await db.query(query, values);
 
-    res.status(201).json({ message: 'Calculation saved successfully' });
+    res.status(201).json({ message: "Calculation saved successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Failed to save calculation' });
+    res.status(500).json({ error: "Failed to save calculation" });
   }
 };
 
@@ -29,6 +56,6 @@ exports.getAllCalculations = async (req, res) => {
     res.json(rows);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Failed to load calculations.' });
+    res.status(500).json({ error: "Failed to load calculations." });
   }
 };

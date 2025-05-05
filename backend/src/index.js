@@ -1,7 +1,7 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-require('dotenv').config();
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+require("dotenv").config();
 
 const app = express();
 
@@ -10,10 +10,10 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Routes
-app.use('/api', require('./routes'));
+app.use("/api", require("./routes"));
 
 // Error handling middleware (add after routes)
-const errorHandler = require('./middleware/errorHandler');
+const errorHandler = require("./middleware/errorHandler");
 app.use(errorHandler);
 
 module.exports = app;
