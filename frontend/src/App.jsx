@@ -5,7 +5,7 @@ import LoginModal from './components/LoginModal';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ComparePage from './pages/ComparePage';
 import ChartPage from './pages/ChartPage';
-import './App.css'; // Add custom styles
+import './App.css'; 
 import Navbar from './components/Navbar';
 import ErrorBoundary from './components/ErrorBoundary';
 
