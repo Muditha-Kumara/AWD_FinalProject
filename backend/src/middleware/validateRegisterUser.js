@@ -1,27 +1,27 @@
+const AppError = require("../utils/AppError");
+
 const validateRegisterUser = (req, res, next) => {
   const { name, email, password } = req.body;
+
   if (!name) {
-    return res.status(400).json({ error: "Name is required" });
+    return next(new AppError("Name is required", "ValidationError", 400));
   }
   if (!/^[a-zA-Z0-9]+$/.test(name)) {
-    return res.status(400).json({
-      error: "Name can only contain letters and numbers",
-    });
+    return next(new AppError("Name can only contain letters and numbers", "ValidationError", 400));
   }
   if (!email) {
-    return res.status(400).json({ error: "Email are required" });
+    return next(new AppError("Email is required", "ValidationError", 400));
   }
   if (!/\S+@\S+\.\S+/.test(email)) {
-    return res.status(400).json({ error: "Email is not valid" });
+    return next(new AppError("Email is not valid", "ValidationError", 400));
   }
   if (!password) {
-    return res.status(400).json({ error: "Password is required" });
+    return next(new AppError("Password is required", "ValidationError", 400));
   }
   if (password.length < 6) {
-    return res.status(400).json({
-      error: "Password must be at least 6 characters long",
-    });
+    return next(new AppError("Password must be at least 6 characters long", "ValidationError", 400));
   }
+
   next();
 };
 

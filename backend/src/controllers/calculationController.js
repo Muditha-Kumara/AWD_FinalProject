@@ -1,6 +1,7 @@
 const db = require("../models/db");
+const AppError = require("../utils/AppError");
 
-exports.saveCalculation = async (req, res) => {
+exports.saveCalculation = async (req, res, next) => {
   const {
     title,
     description,
@@ -22,7 +23,7 @@ exports.saveCalculation = async (req, res) => {
     !termType ||
     !monthlyPayment
   ) {
-    return res.status(400).json({ error: "Missing required fields" });
+    return next(new AppError("Missing required fields", "ValidationError", 400));
   }
 
   try {
@@ -44,7 +45,7 @@ exports.saveCalculation = async (req, res) => {
     res.status(201).json({ message: "Calculation saved successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Failed to save calculation" });
+    next(new AppError("Failed to save calculation", "DatabaseError", 500));
   }
 };
 

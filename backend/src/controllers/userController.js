@@ -1,8 +1,9 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const pool = require("../models/db");
+const AppError = require("../utils/AppError");
 
-exports.registerUser = async (req, res) => {
+exports.registerUser = async (req, res, next) => {
   const { name, email, password } = req.body;
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -12,11 +13,11 @@ exports.registerUser = async (req, res) => {
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    next(new AppError(err.message, "DatabaseError", 500));
   }
 };
 
-exports.loginUser = async (req, res) => {
+exports.loginUser = async (req, res, next) => {
   const { email, password } = req.body;
   try {
     console.debug("Login attempt for email:", email);
@@ -28,7 +29,7 @@ exports.loginUser = async (req, res) => {
 
     if (result.rows.length === 0) {
       console.warn("User not found for email:", email);
-      return res.status(404).json({ error: "User not found" });
+      return next(new AppError("User not found", "NotFoundError", 404));
     }
 
     const user = result.rows[0];
@@ -37,7 +38,7 @@ exports.loginUser = async (req, res) => {
 
     if (!isMatch) {
       console.warn("Invalid credentials for email:", email);
-      return res.status(401).json({ error: "Invalid credentials" });
+      return next(new AppError("Invalid credentials", "AuthError", 401));
     }
 
     const token = jwt.sign(
@@ -50,6 +51,6 @@ exports.loginUser = async (req, res) => {
     res.json({ token });
   } catch (err) {
     console.error("Error during login process:", err.message);
-    res.status(500).json({ error: err.message });
+    next(new AppError(err.message, "ServerError", 500));
   }
 };
