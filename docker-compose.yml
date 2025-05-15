@@ -12,7 +12,7 @@ services:
       - db
 
   frontend:
-    image: mudithadocker/awd:phase-3-local
+    image: mudithadocker/awd:phase-3
     ports:
       - "80:80"
     depends_on:
