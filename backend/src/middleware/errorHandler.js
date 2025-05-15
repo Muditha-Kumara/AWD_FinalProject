@@ -1,6 +1,6 @@
 const AppError = require("../utils/AppError");
 
-const errorHandler = (err, req, res) => {
+const errorHandler = (err, req, res, next) => {
   console.error(err.stack);
 
   const statusCode = err instanceof AppError ? err.statusCode : 500;

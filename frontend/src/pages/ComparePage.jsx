@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Line } from 'react-chartjs-2';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
 function calculateAmortizationSchedule({ loanAmount, interestRate, term, termType }) {
   const principal = parseFloat(loanAmount);
@@ -48,52 +50,54 @@ function ComparePage() {
   const [error, setError] = useState('');
   const [selectedIds, setSelectedIds] = useState([]);
   const [showLimitPopup, setShowLimitPopup] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchCalculations = async () => {
-      setLoading(true);
-      setError('');
-      const token = localStorage.getItem('token');
-      if (!token) {
-        setError('You must be logged in to view saved calculations.');
-        setLoading(false);
-        return;
-      }
-      try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/loans/calculations/all`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        const mapped = res.data.map(calc => ({
-          id: calc.id || calc._id,
-          title: calc.title,
-          description: calc.description,
-          loanTypeName: calc.loantypename || calc.loanTypeName,
-          loanAmount: calc.loanamount || calc.loanAmount,
-          interestRate: calc.interestrate || calc.interestRate,
-          term: calc.term,
-          termType: calc.termtype || calc.termType,
-          monthlyPayment: calc.monthlypayment || calc.monthlyPayment,
-        }));
-        setCalculations(mapped);
-      } catch (err) {
-        if (err.response) {
-          if (err.response.status === 403) {
-            setError('Access denied. Please log in again or check your permissions.');
-          } else if (err.response.status === 401) {
-            setError('Session expired. Please log in again.');
-          } else if (err.response.status === 500) {
-            setError('Server error. Please try again later.');
+    const token = Cookies.get('token');
+
+    if (!token) {
+      navigate('/login');
+    } else {
+      const fetchCalculations = async () => {
+        setLoading(true);
+        setError('');
+        try {
+          const res = await axios.get(`${import.meta.env.VITE_API_URL}/loans/calculations/all`, {
+            headers: { Authorization: `Bearer ${token}` },
+            withCredentials: true,
+          });
+          const mapped = res.data.map(calc => ({
+            id: calc.id || calc._id,
+            title: calc.title,
+            description: calc.description,
+            loanTypeName: calc.loantypename || calc.loanTypeName,
+            loanAmount: calc.loanamount || calc.loanAmount,
+            interestRate: calc.interestrate || calc.interestRate,
+            term: calc.term,
+            termType: calc.termtype || calc.termType,
+            monthlyPayment: calc.monthlypayment || calc.monthlyPayment,
+          }));
+          setCalculations(mapped);
+        } catch (err) {
+          if (err.response) {
+            if (err.response.status === 403) {
+              setError('Access denied. Please log in again or check your permissions.');
+            } else if (err.response.status === 401) {
+              setError('Session expired. Please log in again.');
+            } else if (err.response.status === 500) {
+              setError('Server error. Please try again later.');
+            } else {
+              setError(`Error: ${err.response.statusText}`);
+            }
           } else {
-            setError(`Error: ${err.response.statusText}`);
+            setError('Failed to load calculations.');
           }
-        } else {
-          setError('Failed to load calculations.');
         }
-      }
-      setLoading(false);
-    };
-    fetchCalculations();
-  }, []);
+        setLoading(false);
+      };
+      fetchCalculations();
+    }
+  }, [navigate]);
 
   const handleCheckbox = (id) => {
     setSelectedIds(prev => {

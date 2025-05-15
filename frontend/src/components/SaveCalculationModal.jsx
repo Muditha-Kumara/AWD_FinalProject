@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 function SaveCalculationModal({ show, onClose, onSaveSuccess, calculation }) {
   const [title, setTitle] = useState('');
@@ -20,8 +21,15 @@ function SaveCalculationModal({ show, onClose, onSaveSuccess, calculation }) {
     setLoading(true);
     setError('');
     try {
-      const token = localStorage.getItem('token');
-      const email = localStorage.getItem('email');
+      const token = Cookies.get('token');
+      const email = Cookies.get('email');
+
+      if (!token) {
+        setError('Authentication token is missing. Please log in.');
+        setLoading(false);
+        return;
+      }
+
       const payload = {
         title,
         description,
@@ -29,7 +37,8 @@ function SaveCalculationModal({ show, onClose, onSaveSuccess, calculation }) {
         email
       };
       await axios.post(`${import.meta.env.VITE_API_URL}/calculations/save`, payload, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true
       });
       setLoading(false);
       onSaveSuccess();
@@ -42,8 +51,8 @@ function SaveCalculationModal({ show, onClose, onSaveSuccess, calculation }) {
         } else if (err.response.status === 403) {
           setError('Session expired or invalid. Please log in again.');
           setTimeout(() => {
-            localStorage.removeItem('token');
-            localStorage.removeItem('email');
+            Cookies.remove('token');
+            Cookies.remove('email');
             onClose(); 
           }, 1500);
         } else {

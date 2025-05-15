@@ -1,45 +1,84 @@
-import React, { useState, useEffect } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import LoanCalculator from './LoanCalculator';
-import LoginModal from './components/LoginModal';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import ComparePage from './pages/ComparePage';
-import ChartPage from './pages/ChartPage';
-import './App.css'; 
-import Navbar from './components/Navbar';
-import ErrorBoundary from './components/ErrorBoundary';
+import React, { useEffect, useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import LoanCalculator from "./LoanCalculator";
+import LoginModal from "./components/LoginModal";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import ComparePage from "./pages/ComparePage";
+import ChartPage from "./pages/ChartPage";
+import "./App.css";
+import Navbar from "./components/Navbar";
+import ErrorBoundary from "./components/ErrorBoundary";
+import axios from "axios";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
-  const [userEmail, setUserEmail] = useState('');
+  const [userEmail, setUserEmail] = useState("");
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    const email = localStorage.getItem('email');
-    if (token && email) {
-      setIsLoggedIn(true);
-      setUserEmail(email);
-    }
+    console.log("useEffect is running");
+
+    const checkAuthStatus = async () => {
+      try {
+        const response = await axios.get("/api/auth/status", {
+          withCredentials: true, // Ensures cookies are sent with the request
+        });
+
+        console.debug("Auth status response:", response.data);
+
+        if (response.data.email) {
+          setIsLoggedIn(true);
+          setUserEmail(response.data.email);
+          console.debug("User is logged in with email:", response.data.email);
+        } else {
+          console.debug("User is not logged in.");
+        }
+      } catch (error) {
+        console.error("Failed to fetch auth status:", error);
+      }
+    };
+
+    checkAuthStatus();
   }, []);
 
-  // Accept both token and email from LoginModal
-  const handleLogin = (token, email) => {
-    setIsLoggedIn(true);
-    setUserEmail(email);
-    setShowLoginModal(false);
+  const handleLogin = async (email, password) => {
+    try {
+      const response = await axios.post(
+        "/api/users/login",
+        { email, password },
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (response.status === 200) {
+        setIsLoggedIn(true);
+        setUserEmail(response.data.email);
+        console.debug("Login successful with email:", response.data.email);
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('email');
     setIsLoggedIn(false);
-    setUserEmail('');
+    setUserEmail("");
   };
 
   return (
     <Router>
-      <div className="app-container d-flex flex-column" style={{ minHeight: '100vh', width: '100%', maxWidth: '100vw', backgroundImage: 'url(/background.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+      <div
+        className="app-container d-flex flex-column"
+        style={{
+          minHeight: "100vh",
+          width: "100%",
+          maxWidth: "100vw",
+          backgroundImage: "url(/background.jpg)",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
         <Navbar
           isLoggedIn={isLoggedIn}
           userEmail={userEmail}
@@ -47,21 +86,43 @@ function App() {
           onShowLoginModal={() => setShowLoginModal(true)}
         />
 
-        <div className="flex-grow-1 d-flex flex-column" style={{ overflowY: 'auto' }}>
+        <div
+          className="flex-grow-1 d-flex flex-column"
+          style={{ overflowY: "auto" }}
+        >
           <div className="container mt-4 flex-grow-1">
             <Routes>
-              <Route path="/" element={
-                <ErrorBoundary>
-                  <LoanCalculator onRequireLogin={() => setShowLoginModal(true)} />
-                </ErrorBoundary>
-              } />
+              <Route
+                path="/"
+                element={
+                  <ErrorBoundary>
+                    <LoanCalculator
+                      onRequireLogin={() => setShowLoginModal(true)}
+                    />
+                  </ErrorBoundary>
+                }
+              />
               <Route path="/compare" element={<ComparePage />} />
               <Route path="/chart" element={<ChartPage />} />
+              <Route
+                path="/login"
+                element={
+                  <LoginModal
+                    show={false}
+                    onClose={() => {}}
+                    onLogin={() => {}}
+                  />
+                }
+              />
             </Routes>
           </div>
         </div>
 
-        <LoginModal show={showLoginModal} onClose={() => setShowLoginModal(false)} onLogin={handleLogin} />
+        <LoginModal
+          show={showLoginModal}
+          onClose={() => setShowLoginModal(false)}
+          onLogin={handleLogin}
+        />
       </div>
     </Router>
   );

@@ -2,12 +2,11 @@ const jwt = require("jsonwebtoken");
 const AppError = require("../utils/AppError");
 
 module.exports = function (req, res, next) {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1]; // Expecting 'Bearer <token>'
-
-  if (!token) {
+  if (!req.cookies || !req.cookies.token) {
     return next(new AppError("No token provided", "AuthError", 401));
   }
+
+  const token = req.cookies.token; // Retrieve token from HTTP-only cookie
 
   jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
     if (err) {

@@ -40,7 +40,7 @@ function LoanCalculator() {
 
   useEffect(() => {
     // Fetch loan types and interest rates from backend API
-    fetch(`${import.meta.env.VITE_API_URL}/loans`)
+    fetch(`${import.meta.env.VITE_API_URL}/loans`, { credentials: 'include' })
       .then((response) => {
         if (!response.ok) {
           throw new Error('Failed to fetch loan types');

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Cookies from 'js-cookie';
 
 function LoginModal({ show, onClose, onLogin }) {
   const [email, setEmail] = useState('');
@@ -15,13 +16,14 @@ function LoginModal({ show, onClose, onLogin }) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
+        credentials: 'include', // Include cookies in the request
       });
 
       if (response.ok) {
         const data = await response.json();
-        // Save token and email to localStorage
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('email', email);
+        // Save token to HTTP-only cookie
+        Cookies.set('token', data.token, { secure: true, sameSite: 'strict' });
+        Cookies.set('email', email, { secure: true, sameSite: 'strict' });
         onLogin(data.token, email); // Pass both token and email to parent
         setError('');
       } else if (response.status === 404) {

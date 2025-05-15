@@ -1,16 +1,28 @@
-import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Line } from "react-chartjs-2";
 import "bootstrap/dist/css/bootstrap.min.css";
 import LoginModal from "../components/LoginModal";
 import SaveCalculationModal from "../components/SaveCalculationModal";
+import Cookies from 'js-cookie';
 
 function ChartPage() {
   const location = useLocation();
+  const navigate = useNavigate();
   const { chartData, monthlyPayment, loanType, loanTypeName, loanAmount, interestRate, term, termType } = location.state || {};
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
+
+  useEffect(() => {
+    const token = Cookies.get('token');
+
+    if (!token) {
+      navigate('/login');
+    } else {
+      // fetchData(token); // Uncomment and implement fetchData if needed
+    }
+  }, [navigate]);
 
   if (!chartData || !monthlyPayment) {
     return (
@@ -21,7 +33,7 @@ function ChartPage() {
   }
 
   const handleSaveClick = () => {
-    const token = localStorage.getItem('token');
+    const token = Cookies.get('token');
     if (!token) {
       setShowLoginModal(true);
     } else {

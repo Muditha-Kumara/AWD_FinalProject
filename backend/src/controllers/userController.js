@@ -44,11 +44,24 @@ exports.loginUser = async (req, res, next) => {
     const token = jwt.sign(
       { id: user.id, email: user.email },
       process.env.JWT_SECRET,
-      { expiresIn: "10m" },
+      { expiresIn: "5m" },
     );
     console.debug("Generated JWT token for user ID:", user.id);
 
-    res.json({ token });
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "development", // "production",
+      maxAge: 5 * 60 * 1000, // 5 minutes
+    });
+
+    /* Set a cookie to store the user's email, accessible by the frontend
+    res.cookie("email", user.email, {
+      httpOnly: false, // Allow frontend access to this cookie
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 5 * 60 * 1000, // 5 minutes
+    });*/
+
+    res.status(200).json({ message: "Login successful", email: user.email });
   } catch (err) {
     console.error("Error during login process:", err.message);
     next(new AppError(err.message, "ServerError", 500));
