@@ -11,7 +11,7 @@
 - **Features**:
   - RESTful API endpoints for core functionalities.
   - Middleware for request validation and error handling.
-- **Deployment**: Hosted on a cloud platform (e.g., AWS or Heroku).
+- **Deployment**: Hosted on a cloud platform (AWS).
 
 ## 3. Frontend
 
@@ -39,7 +39,6 @@
 - **Implemented Functionalities**:
   - User authentication and authorization.
   - CRUD operations for core entities.
-  - Real-time updates using WebSockets.
 
 ## 7. Code Quality and Documentation
 
@@ -63,7 +62,7 @@
 
 - **Design**:
   - User-friendly and intuitive interface.
-  - Consistent styling using a CSS framework (e.g., Tailwind CSS).
+  - Consistent styling using a CSS framework (used bootstrap).
 - **Interaction**:
   - Smooth navigation and interactive elements.
   - Accessibility features for inclusive design.
