@@ -21,23 +21,14 @@ function SaveCalculationModal({ show, onClose, onSaveSuccess, calculation }) {
     setLoading(true);
     setError('');
     try {
-      const token = Cookies.get('token');
-      const email = Cookies.get('email');
-
-      if (!token) {
-        setError('Authentication token is missing. Please log in.');
-        setLoading(false);
-        return;
-      }
-
+ 
       const payload = {
         title,
         description,
         ...calculation,
-        email
+
       };
       await axios.post(`${import.meta.env.VITE_API_URL}/calculations/save`, payload, {
-        headers: { Authorization: `Bearer ${token}` },
         withCredentials: true
       });
       setLoading(false);
