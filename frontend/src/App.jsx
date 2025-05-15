@@ -20,8 +20,8 @@ function App() {
 
     const checkAuthStatus = async () => {
       try {
-        const response = await axios.get("/api/auth/status", {
-          withCredentials: true, // Ensures cookies are sent with the request
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/auth/status`, {
+          withCredentials: true, 
         });
 
         console.debug("Auth status response:", response.data);
@@ -44,7 +44,7 @@ function App() {
   const handleLogin = async (email, password) => {
     try {
       const response = await axios.post(
-        "/api/users/login",
+        `${import.meta.env.VITE_API_URL}/users/login`,
         { email, password },
         {
           withCredentials: true,
