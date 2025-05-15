@@ -41,24 +41,10 @@ function App() {
     checkAuthStatus();
   }, []);
 
-  const handleLogin = async (email, password) => {
-    try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/users/login`,
-        { email, password },
-        {
-          withCredentials: true,
-        }
-      );
-
-      if (response.status === 200) {
-        setIsLoggedIn(true);
-        setUserEmail(response.data.email);
-        console.debug("Login successful with email:", response.data.email);
-      }
-    } catch (error) {
-      console.error("Login failed:", error);
-    }
+const handleLogin = (token, email) => {
+    setIsLoggedIn(true);
+    setUserEmail(email);
+    setShowLoginModal(false);
   };
 
   const handleLogout = () => {

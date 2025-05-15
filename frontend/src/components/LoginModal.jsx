@@ -23,7 +23,7 @@ function LoginModal({ show, onClose, onLogin }) {
         const data = await response.json();
         // Save token to HTTP-only cookie
         Cookies.set('token', data.token, { secure: true, sameSite: 'strict' });
-        Cookies.set('email', email, { secure: true, sameSite: 'strict' });
+        //Cookies.set('email', email, { secure: true, sameSite: 'strict' });
         onLogin(data.token, email); // Pass both token and email to parent
         setError('');
       } else if (response.status === 404) {
