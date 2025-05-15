@@ -1,4 +1,4 @@
-const db = require("../models/db");
+const { pool } = require("../models/db");
 const AppError = require("../utils/AppError");
 
 exports.saveCalculation = async (req, res, next) => {
@@ -23,7 +23,9 @@ exports.saveCalculation = async (req, res, next) => {
     !termType ||
     !monthlyPayment
   ) {
-    return next(new AppError("Missing required fields", "ValidationError", 400));
+    return next(
+      new AppError("Missing required fields", "ValidationError", 400),
+    );
   }
 
   try {
@@ -40,7 +42,7 @@ exports.saveCalculation = async (req, res, next) => {
       email,
     ];
 
-    await db.query(query, values);
+    await pool.query(query, values);
 
     res.status(201).json({ message: "Calculation saved successfully" });
   } catch (error) {
@@ -53,7 +55,7 @@ exports.getAllCalculations = async (req, res) => {
   try {
     const email = req.user.email; // Get email from authenticated user
     const query = `SELECT * FROM calculations WHERE email = $1 ORDER BY createdAt DESC`;
-    const { rows } = await db.query(query, [email]);
+    const { rows } = await pool.query(query, [email]);
     res.json(rows);
   } catch (error) {
     console.error(error);

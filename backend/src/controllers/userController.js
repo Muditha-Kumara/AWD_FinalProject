@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const pool = require("../models/db");
+const { pool } = require("../models/db");
 const AppError = require("../utils/AppError");
 
 exports.registerUser = async (req, res, next) => {
@@ -44,7 +44,7 @@ exports.loginUser = async (req, res, next) => {
     const token = jwt.sign(
       { id: user.id, email: user.email },
       process.env.JWT_SECRET,
-      { expiresIn: "30m" },
+      { expiresIn: "10m" },
     );
     console.debug("Generated JWT token for user ID:", user.id);
 

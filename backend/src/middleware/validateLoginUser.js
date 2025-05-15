@@ -6,7 +6,9 @@ const validateLoginUser = (req, res, next) => {
 
   if (!email || !password) {
     console.debug("validateLoginUser - Missing email or password");
-    return next(new AppError("Email and password are required", "ValidationError", 400));
+    return next(
+      new AppError("Email and password are required", "ValidationError", 400),
+    );
   }
 
   if (!/\S+@\S+\.\S+/.test(email)) {

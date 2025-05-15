@@ -4,11 +4,11 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "nodemon src/server.js",
+    "dev": "nodemon src/servetestr.js",
     "test": "jest --detectOpenHandles --forceExit",
     "lint": "eslint . --fix",
     "format": "prettier --write .",
-    "all": "npm run lint && npm run format && npm test"
+    "test_all": "npm run lint && npm run format && npm test"
   },
   "keywords": [],
   "author": "",

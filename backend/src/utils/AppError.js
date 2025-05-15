@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 class AppError extends Error {
   constructor(message, name = "AppError", statusCode = 400) {
     super(message);
@@ -5,3 +7,5 @@ class AppError extends Error {
     this.statusCode = statusCode;
   }
 }
+
+module.exports = AppError;

@@ -12,6 +12,9 @@ describe("User Routes", () => {
       password: uniquePassword,
       name: uniqueUsername,
     });
+    if (res.statusCode !== 201) {
+      console.error("Response body:", res.body);
+    }
     expect(res.statusCode).toBe(201);
   });
 
@@ -19,6 +22,9 @@ describe("User Routes", () => {
     const res = await request(app)
       .post("/api/users/register")
       .send({ email: "" });
+    if (res.statusCode !== 400) {
+      console.error("Response body:", res.body);
+    }
     expect(res.statusCode).toBe(400);
   });
 
@@ -26,6 +32,9 @@ describe("User Routes", () => {
     const res = await request(app)
       .post("/api/users/register")
       .send({ password: "password" });
+    if (res.statusCode !== 400) {
+      console.error("Response body:", res.body);
+    }
     expect(res.statusCode).toBe(400);
   });
 });

@@ -7,12 +7,12 @@ services:
       - "3000:3000"
     environment:
       - DATABASE_URL=postgres://postgres:p123@db:5432/smartloan
-      - JWT_SECRET=your_super_secret_key
+      - JWT_SECRET=AWD_jwt_secret
     depends_on:
       - db
 
   frontend:
-    image: mudithadocker/awd:latest
+    image: mudithadocker/awd:phase-3-local
     ports:
       - "80:80"
     depends_on:

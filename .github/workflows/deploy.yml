@@ -2,7 +2,7 @@ name: Build and Deploy to AWS EC2
 
 on:
   push:
-    branches: [ phase-2 ]
+    branches: [ phase-3 ]
 
 jobs:
   build-and-push-frontend:
@@ -18,10 +18,10 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build frontend Docker image
-        run: docker build --build-arg VITE_API_URL=http://54.242.0.197:3000/api -t mudithadocker/awd:latest ./frontend
+        run: docker build --build-arg VITE_API_URL=http://localhost:3000/api -t mudithadocker/awd:phase-3-local ./frontend
 
       - name: Push frontend Docker image
-        run: docker push mudithadocker/awd:latest
+        run: docker push mudithadocker/awd:phase-3-local
 
   deploy:
     needs: build-and-push-frontend
