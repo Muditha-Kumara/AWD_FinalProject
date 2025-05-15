@@ -53,19 +53,15 @@ function ComparePage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = Cookies.get('token');
-
-    if (!token) {
-      navigate('/login');
-    } else {
       const fetchCalculations = async () => {
+        console.log('Fetching calculations...');
         setLoading(true);
         setError('');
         try {
           const res = await axios.get(`${import.meta.env.VITE_API_URL}/loans/calculations/all`, {
-            headers: { Authorization: `Bearer ${token}` },
             withCredentials: true,
           });
+          console.log('API response:', res.data);
           const mapped = res.data.map(calc => ({
             id: calc.id || calc._id,
             title: calc.title,
@@ -77,9 +73,12 @@ function ComparePage() {
             termType: calc.termtype || calc.termType,
             monthlyPayment: calc.monthlypayment || calc.monthlyPayment,
           }));
+          console.log('Mapped calculations:', mapped);
           setCalculations(mapped);
         } catch (err) {
+          console.error('Error fetching calculations:', err);
           if (err.response) {
+            console.error('Error response:', err.response);
             if (err.response.status === 403) {
               setError('Access denied. Please log in again or check your permissions.');
             } else if (err.response.status === 401) {
@@ -94,9 +93,9 @@ function ComparePage() {
           }
         }
         setLoading(false);
+        console.log('Fetching calculations completed.');
       };
       fetchCalculations();
-    }
   }, [navigate]);
 
   const handleCheckbox = (id) => {

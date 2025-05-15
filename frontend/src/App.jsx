@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import LoanCalculator from "./LoanCalculator";
 import LoginModal from "./components/LoginModal";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import ComparePage from "./pages/ComparePage";
 import ChartPage from "./pages/ChartPage";
 import "./App.css";
@@ -100,6 +100,7 @@ const handleLogin = (token, email) => {
                   />
                 }
               />
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </div>
         </div>
