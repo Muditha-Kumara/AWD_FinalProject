@@ -5,6 +5,7 @@ import LoginModal from "./components/LoginModal";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import ComparePage from "./pages/ComparePage";
 import ChartPage from "./pages/ChartPage";
+import HistoryPage from "./pages/HistoryPage";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -90,6 +91,7 @@ const handleLogin = (token, email) => {
               />
               <Route path="/compare" element={<ComparePage />} />
               <Route path="/chart" element={<ChartPage />} />
+              <Route path="/history" element={<HistoryPage />} />
               <Route
                 path="/login"
                 element={

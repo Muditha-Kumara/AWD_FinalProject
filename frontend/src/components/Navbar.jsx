@@ -40,6 +40,11 @@ function Navbar({ isLoggedIn, userEmail, onLoginClick, onShowLoginModal }) {
                   <FontAwesomeIcon icon={faBalanceScale} /> Compare
                 </Link>
               </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/history">
+                  <FontAwesomeIcon icon={faUser} /> History
+                </Link>
+              </li>
               {isLoggedIn ? (
                 <>
                   <li className="nav-item">
