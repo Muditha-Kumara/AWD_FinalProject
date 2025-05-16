@@ -6,14 +6,6 @@
 ## 📝 [Project Overview](https://github.com/Muditha-Kumara/AWD_FinalProject/blob/phase-1/Phase_1/Project_phase_1.md)
 The SmartLoan Calculator is a responsive web application designed to simplify loan repayment calculations. It targets users such as students, small business owners, and young professionals who need to calculate, save, and compare loan options. The project aims to provide a user-friendly interface with secure authentication and robust backend support.
 
-## 📌 Use Case Summary
-| Use Case                              | Implemented (Yes/No) | Demonstration / Notes                                                                 |
-|---------------------------------------|----------------------|---------------------------------------------------------------------------------------|
-| User logs in and makes a calculation  | Yes                  | Implemented using secure session handling. Demo at 2:45 in the video.                |
-| User saves loan calculations          | Yes                  | Users can save calculations securely. Demo at 4:10 in the video.                     |
-| User compares loan options            | Yes                  | Comparison feature with charts. Demo at 6:30 in the video.                           |
-| Admin deletes resources               | No                   | Not prioritized, possible future work.                                               |
-
 ## ✍️ Technical Implementation
 - **[Frontend](https://github.com/Muditha-Kumara/AWD_FinalProject/blob/phase-3/frontend/package.json)**: React.js with Vite, Bootstrap for styling, and Chart.js for data visualization.
 - **[Backend](https://github.com/Muditha-Kumara/AWD_FinalProject/blob/phase-3/frontend/package.json)**: Node.js with Express, PostgreSQL for database management, and JWT for authentication.
