@@ -37,11 +37,11 @@ jobs:
 
       - name: Copy files to EC2
         run: |
-          rsync -avz --exclude '.git*' -e "ssh -o StrictHostKeyChecking=no" ./ ubuntu@${{ secrets.EC2_HOST3 }}:/home/ubuntu/app
+          rsync -avz --exclude '.git*' -e "ssh -o StrictHostKeyChecking=no" ./ ec2-user@${{ secrets.EC2_HOST3 }}:/home/ubuntu/app
 
       - name: Deploy on EC2
         run: |
-          ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST3 }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_HOST3 }} << 'EOF'
             cd ~/app
             docker-compose pull frontend
             docker-compose down || true
