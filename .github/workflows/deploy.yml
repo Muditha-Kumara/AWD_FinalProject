@@ -47,3 +47,9 @@ jobs:
             docker-compose down || true
             docker-compose up -d --build
           EOF
+
+      - name: Ensure user has Docker permissions
+        run: |
+          sudo usermod -aG docker $USER
+          newgrp docker
+          sudo systemctl restart docker
