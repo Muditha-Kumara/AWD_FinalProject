@@ -1,6 +1,62 @@
 /* eslint-env jest */
 const request = require("supertest");
-const app = require("../src/index"); // Adjust path if needed
+const app = require("../src/index"); 
+
+describe("Integration Tests for API Endpoints", () => {
+  let token;
+
+  beforeAll(async () => {
+    // Register a user
+    const uniqueEmail = `test+${Date.now()}@example.com`;
+    const uniquePassword = `pass${Date.now()}`;
+    await request(app).post("/api/users/register").send({
+      name: "Test User",
+      email: uniqueEmail,
+      password: uniquePassword,
+    });
+
+    // Login to get token
+    const res = await request(app).post("/api/users/login").send({
+      email: uniqueEmail,
+      password: uniquePassword,
+    });
+    token = res.body.token;
+  });
+
+  it("should fetch loan types", async () => {
+    const res = await request(app).get("/api/loans");
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toBeInstanceOf(Array);
+    expect(res.body.length).toBeGreaterThan(0);
+  });
+
+  it("should save a loan calculation", async () => {
+    const res = await request(app)
+      .post("/api/calculations/save")
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        title: "Test Calculation",
+        description: "Test Description",
+        loanTypeName: "Home Loan",
+        loanAmount: 100000,
+        interestRate: 3.5,
+        term: 30,
+        termType: "years",
+        monthlyPayment: 449.04,
+      });
+    expect(res.statusCode).toBe(201);
+    expect(res.body.message).toBe("Calculation saved successfully");
+  });
+
+  it("should fetch all saved calculations", async () => {
+    const res = await request(app)
+      .get("/api/loans/calculations/all")
+      .set("Authorization", `Bearer ${token}`);
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toBeInstanceOf(Array);
+    expect(res.body.length).toBeGreaterThan(0);
+  });
+});
 
 describe("User Routes", () => {
   it("should register a user", async () => {
@@ -12,9 +68,6 @@ describe("User Routes", () => {
       password: uniquePassword,
       name: uniqueUsername,
     });
-    if (res.statusCode !== 201) {
-      console.error("Response body:", res.body);
-    }
     expect(res.statusCode).toBe(201);
   });
 
@@ -22,9 +75,6 @@ describe("User Routes", () => {
     const res = await request(app)
       .post("/api/users/register")
       .send({ email: "" });
-    if (res.statusCode !== 400) {
-      console.error("Response body:", res.body);
-    }
     expect(res.statusCode).toBe(400);
   });
 
@@ -32,9 +82,6 @@ describe("User Routes", () => {
     const res = await request(app)
       .post("/api/users/register")
       .send({ password: "password" });
-    if (res.statusCode !== 400) {
-      console.error("Response body:", res.body);
-    }
     expect(res.statusCode).toBe(400);
   });
 });
