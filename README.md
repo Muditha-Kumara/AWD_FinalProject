@@ -7,74 +7,88 @@ Welcome to the **SmartLoan Calculator Project**! This is a responsive web applic
 - **Calculation History**: Track and review past loan calculations.
 
 <br><br>
-## Phase 1 Documentation
+# Project Phase 3 - Further Development
 
-The following documents provide detailed insights into the initial phase of the project:
-- 📄 [Phase 1 Submission](Phase_1/Project_phase_1.md): Comprehensive documentation of the project's first phase.
-- 📘 [Project Logbook](Phase_1/Logbook.md): A detailed log of the project's progress and milestones.
-- 🖼️ [UI Design](Phase_1/UI.jpeg): Visual representation of the user interface design for Phase 1.
- 
+## 1. Enhancement Overview
 
-## Project Structure
+- **Development Focus**: Implemented additional features based on Phase 1 use cases and Phase 2 feedback
+- **Key Improvements**: 
+  - Enhanced user experience through UI refinements.
+  - Added History page for better tracking of user activities.
+  - Improved automation for build and deployment processes.
+  - Centralized error handling and debugging mechanisms.
+  - Optimized performance in critical workflows.
+  - Configured HTTP-only cookies for secure session management.
+  - Built session verification functionality in the backend.
 
-The project directory is organized as follows:
+## 2. Backend Enhancements
 
-```
-AWD_FinalProject/
-├── Phase_1/
-│   ├── Project_phase_1.md  # Phase 1 submission document
-│   ├── Logbook.md          # Project logbook
-│   └── UI.jpeg             # UI design for Phase 1
-├── src/                    # Future implementation files
-└── README.md               # Project overview and documentation
-```
+- **Technology**: Extended existing Node.js/Express backend
+- **New Features**:
+  - Implemented HTTP-only cookies for secure session management.
+  - Added robust data validation middleware to ensure input integrity.
+  - Built backend session validation endpoint at `/auth/status`.
+  - Enhanced error handling using `utils/AppError.js` for consistent error responses.
+  - Improved debugging and logging mechanisms for better traceability.
+- **Performance**:
+  - Optimized error handling to provide meaningful information to the frontend.
+  - Enhanced security and reduced vulnerabilities through best practices.
 
-Stay tuned for updates as the project evolves!
+## 3. Frontend Upgrades
 
-<br><br>
-## Phase 2 Documentation
+- **Technology**: Expanded React.js implementation
+- **New Components**:
+  - Added History page for tracking past calculations.
+  - Integrated real-time data visualization charts for better insights.
+  - Enhanced feedback and error handling mechanisms for improved user experience.
+- **Improvements**:
+  - Designed a user-friendly UI with intuitive navigation.
+  - Ensured safe and secure implementation practices.
 
-The following documents provide detailed insights into the second phase of the project:
-- 📄 [Phase 2 Submission](Phase_2/Project_phase_2.md): Comprehensive documentation of the project's second phase.
-- 📘 [Testing Report](Phase_2/Testing_Report.md): Detailed report on the testing process and results.
-- 📘 [Project Logbook](Phase_1/Logbook.md): A detailed log of the project's progress and milestones.
-- 🌐 [Live Application](http://54.242.0.197){:target="_blank"}: Access the deployed SmartLoan Calculator application.
+## 4. Architecture Refinements
 
-## Updated Project Structure
+- **Pattern**: Enhanced MVC architecture
+- **Structural Improvements**:
+  - Created shared utility modules for reusable functionalities (e.g., `utils/AppError.js`).
+  - Centralized middleware for authentication and validation (e.g., `middleware/auth.js`, `middleware/validateLoginUser.js`, `middleware/validateRegisterUser.js`).
+- **Documentation**:
+  - Updated architecture diagrams to reflect the current structure.
+  - Added a decision log for key changes in the architecture.
 
-The project directory is now organized as follows:
+## 5. Additional Functionalities
 
-```
-AWD_FinalProject/
-├── backend/                # Backend code and related files
-│   ├── src/                # Source code for the backend
-│   │   ├── controllers/    # API controllers
-│   │   ├── models/         # Database models
-│   │   ├── routes/         # API routes
-│   │   ├── middlewares/    # Middleware functions
-│   │   └── app.js          # Main application file
-│   ├── config/             # Configuration files (e.g., database, environment)
-│   ├── tests/              # Backend tests
-│   └── package.json        # Backend dependencies
-├── frontend/               # Frontend code and related files
-│   ├── public/             # Static assets (e.g., images, fonts)
-│   ├── src/                # Source code for the frontend
-│   │   ├── components/     # React components
-│   │   ├── pages/          # Page components
-│   │   ├── services/       # API service calls
-│   │   ├── styles/         # CSS or SCSS files
-│   │   └── App.js          # Main React application file
-│   └── package.json        # Frontend dependencies
-├── Phase_1/                # Phase 1 documentation
-│   ├── Project_phase_1.md  # Phase 1 submission document
-│   ├── Logbook.md          # Project logbook
-│   └── UI.jpeg             # UI design for Phase 1
-├── Phase_2/                # Phase 2 documentation
-│   ├── Project_phase_2.md  # Phase 2 submission document
-│   └── Testing_Report.md   # Testing report for Phase 2
-├── .gitignore              # Git ignore file
-├── README.md               # Project overview and documentation
-└── package.json            # Root-level dependencies (if applicable)
-```
+- **Use Cases Implemented**:
+  - [Use Case 1 from Phase 1] - Fully implemented with robust testing.
+  - [Use Case 2 from Phase 1] - Partially implemented with key features.
+  - [New Use Case] - Developed based on user feedback to address specific needs.
+- **Deployment and Testing**:
+  - All functionalities are built using three Docker images (backend, frontend, and database).
+  - GitHub Actions is used for automated build and deployment pipelines.
+  - `mySet.sh` script is utilized for local testing and environment setup.
 
-Stay tuned for more updates as the project progresses!
+## 6. Code Quality Improvements
+
+- **Refactoring**:
+  - Extracted duplicate code into shared modules.
+  - Improved type safety with TypeScript migration.
+  - Standardized API response formats.
+- **Documentation**:
+  - Added JSDoc to all new functions.
+  - Created API usage examples.
+  - Updated README with new features.
+
+## 7. Future Recommendations
+
+1. Implement additional security features.
+2. Add more comprehensive analytics.
+3. Expand mobile responsiveness.
+4. Develop an admin dashboard for monitoring.
+5. Deploy the database with dedicated cloud database services and set up load balancing.
+
+## Submission
+
+- **Logbook**: Updated with all Phase 3 activities ([View Logbook](#))
+
+
+
+
