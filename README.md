@@ -87,7 +87,7 @@ Welcome to the **SmartLoan Calculator Project**! This is a responsive web applic
 
 ## Submission
 
-- **Logbook**: Updated with all Phase 3 activities ([View Logbook](#))
+- **Logbook**: Updated with all Phase 3 activities ([View Logbook](./LogBook.md))
 
 
 
