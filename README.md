@@ -2,31 +2,17 @@
 
 ## Project Overview
 
-Welcome to the **SmartLoan Calculator Project**! This is a responsive web application designed to simplify loan repayment calculations. Key features include:
-- **User Authentication**: Secure login and registration for users.
-- **Calculation History**: Track and review past loan calculations.
+Welcome to the **SmartLoan Calculator Project**! This responsive web application is designed to streamline loan repayment calculations. Key features include:
 
-<br><br>
-## Phase 1 Documentation
+- **User Authentication**: Secure login and registration functionality to protect user data.
+- **Calculation History**: Comprehensive tracking and review of past loan calculations for better financial planning.
 
-The following documents provide detailed insights into the initial phase of the project:
-- 📄 [Phase 1 Submission](Phase_1/Project_phase_1.md): Comprehensive documentation of the project's first phase.
-- 📘 [Project Logbook](Phase_1/Logbook.md): A detailed log of the project's progress and milestones.
-- 🖼️ [UI Design](Phase_1/UI.jpeg): Visual representation of the user interface design for Phase 1.
- 
+## Documentation
 
-## Project Structure
-
-The project directory is organized as follows:
-
-```
-AWD_FinalProject/
-├── Phase_1/
-│   ├── Project_phase_1.md  # Phase 1 submission document
-│   ├── Logbook.md          # Project logbook
-│   └── UI.jpeg             # UI design for Phase 1
-├── src/                    # Future implementation files
-└── README.md               # Project overview and documentation
-```
+- [Phase 1 Documentation](https://github.com/Muditha-Kumara/AWD_FinalProject/tree/phase-1)
+- [Phase 2 Documentation](https://github.com/Muditha-Kumara/AWD_FinalProject/tree/phase-2)
+- [Phase 3 Documentation](https://github.com/Muditha-Kumara/AWD_FinalProject/tree/phase-3)
+- [Project Presentation](https://github.com/Muditha-Kumara/AWD_FinalProject/tree/phase-4)
+- [Project Log Book](https://github.com/Muditha-Kumara/AWD_FinalProject/blob/phase-3/LogBook.md)
 
 Stay tuned for updates as the project evolves!
