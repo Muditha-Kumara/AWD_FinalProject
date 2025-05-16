@@ -18,7 +18,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build frontend Docker image
-        run: docker build --build-arg VITE_API_URL=http://54.205.123.86/api -t mudithadocker/awd:phase-3 ./frontend
+        run: docker build --build-arg VITE_API_URL=http://34.234.92.68/api -t mudithadocker/awd:phase-3 ./frontend
 
       - name: Push frontend Docker image
         run: docker push mudithadocker/awd:phase-3
@@ -37,11 +37,11 @@ jobs:
 
       - name: Copy files to EC2
         run: |
-          rsync -avz --exclude '.git*' -e "ssh -o StrictHostKeyChecking=no" ./ ec2-user@${{ secrets.EC2_HOST3 }}:/home/ubuntu/app
+          rsync -avz --exclude '.git*' -e "ssh -o StrictHostKeyChecking=no" ./ ubuntu@${{ secrets.EC2_HOST3 }}:/home/ubuntu/app
 
       - name: Deploy on EC2
         run: |
-          ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_HOST3 }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST3 }} << 'EOF'
             cd ~/app
             docker-compose pull frontend
             docker-compose down || true
