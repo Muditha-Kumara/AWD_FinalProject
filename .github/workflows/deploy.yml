@@ -18,7 +18,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build frontend Docker image
-        run: docker build --build-arg VITE_API_URL=http://34.234.92.68/api -t mudithadocker/awd:phase-3 ./frontend
+        run: docker build --build-arg VITE_API_URL=http://54.224.59.57/api -t mudithadocker/awd:phase-3 ./frontend
 
       - name: Push frontend Docker image
         run: docker push mudithadocker/awd:phase-3
